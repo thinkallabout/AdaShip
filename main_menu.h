@@ -2,6 +2,9 @@
 
 #include <cstdlib>
 
+#ifndef _INCLUDE_MAIN_MENU_H_
+#define _INCLUDE_MAIN_MENU_H_
+
 namespace google {
 
 class MainMenu : public GameMode {
@@ -45,3 +48,5 @@ class MainMenu : public GameMode {
 };
 
 } // namespace google
+
+#endif // _INCLUDE_MAIN_MENU_H_

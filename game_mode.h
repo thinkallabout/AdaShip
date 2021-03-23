@@ -1,5 +1,8 @@
 // Provides the base GameMode class.
 
+#ifndef _INCLUDE_GAME_MODE_H_
+#define _INCLUDE_GAME_MODE_H_
+
 namespace google {
 
 // A GameMode awaits a text input, then runs the Tick() and Render()
@@ -25,3 +28,5 @@ class GameMode {
 };
 
 } // namespace google
+
+#endif // _INCLUDE_GAME_MODE_H_
