@@ -30,22 +30,31 @@ class GameplayMode : public GameMode {
       _active = false;
     }
 
-    bool valid = true;
-    do {
-      Move move = _player1->GetNextMove();
-      valid = _board1->ApplyMove(move);
-      if (!valid && _player1->ShouldRenderBoard()) {
-        std::cout << "Invalid move" << std::endl;
-      }
-    } while (!valid);
+    int turns = 1;
+    if (_config.gameMode == GameModeType::SALVO) {
+      turns = 3;
+    }
+
+    for (int i = 0; i < turns; i++) {
+      bool valid = true;
+      do {
+        Move move = _player1->GetNextMove();
+        valid = _board1->ApplyMove(move);
+        if (!valid && _player1->ShouldRenderBoard()) {
+          std::cout << "Invalid move" << std::endl;
+        }
+      } while (!valid);
+    }
     
-    do {
-      Move move = _player2->GetNextMove();
-      valid = _board2->ApplyMove(move);
-      if (!valid && _player2->ShouldRenderBoard()) {
-        std::cout << "Invalid move" << std::endl;
-      }
-    } while (!valid);
+    for (int i = 0; i < turns; i++) {
+      do {
+        Move move = _player2->GetNextMove();
+        valid = _board2->ApplyMove(move);
+        if (!valid && _player2->ShouldRenderBoard()) {
+          std::cout << "Invalid move" << std::endl;
+        }
+      } while (!valid);
+    }
   }
 
   void Render() override {
