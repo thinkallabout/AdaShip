@@ -22,6 +22,8 @@ struct GameModeConfig {
   PlayerType player1;
   PlayerType player2;
   GameModeType gameMode;
+  int boardHeight;
+  int boardWidth;
 };
 
 class MainMenu : public GameMode {
@@ -43,6 +45,9 @@ class MainMenu : public GameMode {
       std::cout << "Unknown command." << std::endl;
       return;
     }
+
+    _config.boardWidth = 10;
+    _config.boardHeight = 10;
 
     switch (buffer) {
       case 1:

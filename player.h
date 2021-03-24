@@ -25,6 +25,7 @@ class Player {
   virtual Move GetNextMove() = 0;
   virtual bool ShouldRenderBoard() { return false; }
   bool AllPiecesDown() { return _piecesDown; }
+  virtual bool ShouldAutoPlace() { return false; }
  protected:
   bool _piecesDown;
 };
@@ -47,6 +48,7 @@ class BadNpcPlayer : public Player {
     // Return random placements forever.
     return RandomMove();
   }
+  virtual bool ShouldAutoPlace() { return true; }
 
  private:
   Move RandomMove() {

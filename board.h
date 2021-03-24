@@ -71,7 +71,20 @@ class Board {
   }
 
   bool ApplyMove(Move move) {
-    return false;
+    int i = move.x;
+    int j = move.y;
+
+    if (_board[i][j] == Tile::SHIP) {
+      _board[i][j] = Tile::HIT;
+    } else {
+      _board[i][j] = Tile::MISS;
+    }
+    
+    return true;
+  }
+
+  void AutoPlace() {
+    std::cout << "Autoplacing\n";
   }
 
   bool Empty() {

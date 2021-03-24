@@ -16,8 +16,9 @@ namespace google {
 class GameplayMode : public GameMode {
  public:
   GameplayMode(Player* player1, Player* player2,
-              Board* board1, Board* board2) : _player1(player1), _player2(player2), 
-              _board1(board1), _board2(board2) {}
+              Board* board1, Board* board2, GameModeConfig config)
+              : _player1(player1), _player2(player2), 
+              _board1(board1), _board2(board2), _config(config) {}
 
   void WaitForInput() override {
     bool valid = true;
@@ -68,6 +69,7 @@ class GameplayMode : public GameMode {
   Player* _player2;
   Board* _board1;
   Board* _board2;
+  GameModeConfig _config;
 };
 
 } // namespace google
