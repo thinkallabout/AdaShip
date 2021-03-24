@@ -35,6 +35,8 @@ struct GameModeConfig {
   std::vector<ShipDefinition> ships;
 };
 
+GameModeConfig LoadConfigFromFile();
+
 } // namespace google
 
 #endif // _INCLUDE_CONFIG_H_

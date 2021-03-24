@@ -29,28 +29,7 @@ class MainMenu : public GameMode {
       return;
     }
 
-    _config.boardWidth = 10;
-    _config.boardHeight = 10;
-    _config.ships.push_back(ShipDefinition{
-      .length = 5,
-      .name = "Carrier",
-    });
-    _config.ships.push_back(ShipDefinition{
-      .length = 4,
-      .name = "Battleship",
-    });
-    _config.ships.push_back(ShipDefinition{
-      .length = 3,
-      .name = "Destroyer",
-    });
-    _config.ships.push_back(ShipDefinition{
-      .length = 3,
-      .name = "Submarine",
-    });
-    _config.ships.push_back(ShipDefinition{
-      .length = 2,
-      .name = "Patrol Boat",
-    });
+    _config = LoadConfigFromFile();
 
     switch (buffer) {
       case 1:
