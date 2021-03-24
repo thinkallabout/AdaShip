@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <algorithm>
 
 #ifndef _INCLUDE_PLAYER_H_
 #define _INCLUDE_PLAYER_H_
@@ -89,8 +90,10 @@ class HumanPlayer : public Player {
 
   Move MoveFromInputBuffer(std::string buffer) {
     // A2 -> 0, 0
-    int x = std::stoi(buffer.substr(1, 0));
-    int y = std::stoi(buffer.substr(1, 1));
+    std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::toupper);
+    int x = std::stoi(buffer.substr(0,1));
+    int y = std::stoi(buffer.substr(1,1));
+    std::cout << "x: " << x << std::endl << "y: " << y << "\n\n";
     return Move{
       .x = x,
       .y = y,
