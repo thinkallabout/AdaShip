@@ -25,6 +25,9 @@ void Board::Render(bool hitsOnly) {
         case Tile::HIT:  // Hit.
           std::cout << "XX";
           break;
+        case Tile::MINE:  // Miss.
+          std::cout << "MM";
+          break;
         case Tile::MISS:  // Miss.
           std::cout << "xx";
           break;
@@ -97,11 +100,30 @@ bool Board::ApplyMove(Move move) {
 
   if (_board[i][j] == Tile::SHIP) {
     _board[i][j] = Tile::HIT;
+    std::cout << "HIT" << std::endl;
+  } else if (_board[i][j] == Tile::MINE) {
+    HitMine(i, j);
+    std::cout << "HIT MINE" << std::endl;
   } else {
     _board[i][j] = Tile::MISS;
+    std::cout << "MISS" << std::endl;
   }
 
   return true;
+}
+
+void Board::HitMine(int x, int y) {
+  // Adapted from:
+  //  https://stackoverflow.com/questions/43816484/finding-the-neighbors-of-2d-array
+  for (int colNum = x - 1 ; colNum <= (x + 1) ; colNum +=1  ) {
+    for (int rowNum = y - 1 ; rowNum <= (y + 1) ; rowNum +=1  ) {
+      if(! ((colNum == x) && (rowNum == y))) {
+        if(colNum > 0 && rowNum > 0 && rowNum <= _x && colNum <= _y) {
+          _board[colNum][rowNum] = Tile::HIT;
+        }
+      }
+    }
+  }
 }
 
 void Board::AutoPlace(GameModeConfig config) {

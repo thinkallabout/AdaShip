@@ -19,6 +19,7 @@ enum Tile {
   SHIP = 1,
   HIT = 2,
   MISS = 3,
+  MINE = 4,
 };
 
 class Board {
@@ -34,12 +35,14 @@ class Board {
   void AutoPlace(GameModeConfig config);
   bool Empty();
   void Reset();
-
+  
  private:
   int _x;
   int _y;
 
   std::vector<std::vector<int>> _board;
+
+  void HitMine(int x, int y);
 
   void SetupBoard() {
     _board.reserve(_x);

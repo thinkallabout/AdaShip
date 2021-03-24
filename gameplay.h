@@ -35,8 +35,8 @@ class GameplayMode : public GameMode {
       turns = 3;
     }
 
+    bool valid = true;
     for (int i = 0; i < turns; i++) {
-      bool valid = true;
       do {
         Move move = _player1->GetNextMove();
         valid = _board1->ApplyMove(move);
