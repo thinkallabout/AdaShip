@@ -21,11 +21,36 @@ class Board {
     SetupBoard();
   }
 
-  void Render() {
+  void Render(bool hitsOnly = false) {
     RenderLine();
+
     for (int i = 0; i < _y; i++) {
-      std::cout << "XXXXXXXXXX\n";
+      for (int j = 0; j < _x; j++) {
+        switch (_board[i][j]) {
+          // TODO(cameron): Use enum statement here instead.
+          case 1:
+            if (hitsOnly)
+              std::cout << "~";
+            else
+              std::cout << "D";
+            break;
+
+          case 2:  // Hit.
+            std::cout << "X";
+            break;
+          case 3:  // Miss.
+            std::cout << "x";
+            break;
+            
+          case 0:
+          default:
+            std::cout << "~";
+        }
+      }
+
+      std::cout << std::endl;
     }
+
     RenderLine();
   }
 

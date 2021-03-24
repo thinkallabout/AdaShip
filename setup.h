@@ -1,6 +1,9 @@
 // Provides the Setup.
 
 #include <cstdlib>
+#include <memory>
+
+using namespace std;
 
 #ifndef _INCLUDE_SETUP_H_
 #define _INCLUDE_SETUP_H_
@@ -12,22 +15,26 @@ namespace google {
 
 class SetupMode : public GameMode {
  public:
+  SetupMode(Player* player1, Player* player2,
+            Board* board1, Board* board2) : _player1(player1), _player2(player2), 
+            _board1(board1), _board2(board2) {}
+
   void WaitForInput() override {
     _active = false;
   }
 
   void Render() override {
-    _firstBoard.Render();
+    _board1->Render();
   }
 
   void Tick() override {}
 
-  Board GetFirstBoard() { return _firstBoard; }
-  Board GetSecondBoard() { return _secondBoard; }
  private:
   // TODO(cameron): Construct sizes from adaship_config.ini
-  Board _firstBoard;
-  Board _secondBoard;
+  Player* _player1;
+  Player* _player2;
+  Board* _board1;
+  Board* _board2;
 };
 
 } // namespace google
