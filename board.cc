@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 #include "board.h"
 
 namespace google {
@@ -45,18 +46,22 @@ bool Board::IsValidPlacement(Placement placement) {
   int y = placement.move.y;
 
   if (x > _board.size() || y > _board[0].size()) {
-    return false;
+    // return false;
   }
+
+  _board.reserve(x);
 
   if (placement.sideways) {
     for (int i = 0; i < placement.length; i++) {
-      if (_board[x+i][y] != Tile::EMPTY) {
+      _board[x+i].reserve(y);
+      if (_board[x+i][y] > 0) {
         return false;
       }
     }
   } else {
     for (int i = 0; i < placement.length; i++) {
-      if (_board[x][y+i] != Tile::EMPTY) {
+      _board[x+i].reserve(y);
+      if (_board[x][y-i] > 0) {
         return false;
       }
     }
@@ -100,8 +105,34 @@ bool Board::ApplyMove(Move move) {
 }
 
 void Board::AutoPlace(GameModeConfig config) {
-  // player.GetRemainingPieces
-  std::cout << "Autoplacing\n";
+  std::stack<ShipDefinition> ships;
+  for (int i = 0; i < config.ships.size(); i++) {
+    ships.push(config.ships[i]);
+  }
+
+  while (ships.size() > 0) {
+    Placement placement;
+    bool valid = false;
+    while (!valid) {
+      ShipDefinition next = ships.top();
+
+      placement = Placement{
+        .move = Move{
+          .x = (int) rand() % config.boardWidth,
+          .y = (int) rand() % config.boardHeight,
+        },
+        .length = next.length,
+        .sideways = true,
+      };
+      valid = IsValidPlacement(placement);
+
+      if (valid) {
+        // std::cout << "[ NPC ] Auto-placed: " << ships.top().name;
+        ships.pop();
+        ApplyPlacement(placement);
+      }
+    }
+  }
 }
 
 bool Board::Empty() {

@@ -26,52 +26,53 @@ class SetupMode : public GameMode {
     std::cin >> buffer;
 
     bool valid = true;
-    if (_player1->ShouldAutoPlace()
-    || (_player1->IsHuman() && buffer == "y")) {
+    if (_player1->ShouldAutoPlace() || (buffer == "y")) {
       _board1->AutoPlace(_config);
+      if (_player1->ShouldRenderBoard())
+        _board1->Render();
     } else {
       do {
         Placement move = _player1->GetNextPlacement(_board1);
         valid = _board1->ApplyPlacement(move);
-        if (!valid && _player1->ShouldRenderBoard()) {
+        if (!valid && _player1->IsHuman()) {
           _board1->Render();
           std::cout << "Invalid placement:" << std::endl;
         }
+        if (_player1->ShouldRenderBoard())
+          _board1->Render();
       } while (!valid);
     }
 
-    if (_player2->ShouldAutoPlace()
-    || (_player2->IsHuman() && buffer == "y"))  {
+    if (_player2->ShouldAutoPlace()|| (buffer == "y"))  {
       _board2->AutoPlace(_config);
+      if (_player2->ShouldRenderBoard())
+        _board2->Render();
     } else {
       do {
         Placement move = _player2->GetNextPlacement(_board2);
         valid = _board2->ApplyPlacement(move);
-        if (!valid && _player2->ShouldRenderBoard()) {
+        if (!valid && _player2->IsHuman()) {
           _board2->Render();
           std::cout << "Invalid placement:" << std::endl;
         }
+        if (_player2->ShouldRenderBoard())
+          _board2->Render();
       } while (!valid);
     }
 
-    std::cout << "Reset? (y/n)\n";
+    std::cout << "Reset/Continue/Quit? (r/c/q)\n";
     std::cin >> buffer;
-    if (buffer == "y") {
+    if (buffer == "r") {
       _board1->Reset();
       _board2->Reset();
-    } else {
+    } else if (buffer == "c") {
       _active = _player1->AllPiecesDown() && _player2->AllPiecesDown();
+    } else if (buffer == "q") {
+      exit(0);
     }
   }
 
-  void Render() override {
-    if (_player1->ShouldRenderBoard())
-      _board1->Render();
-
-    if (_player2->ShouldRenderBoard())
-      _board2->Render();
-  }
-
+  void Render() override {}
   void Tick() override {}
 
  private:

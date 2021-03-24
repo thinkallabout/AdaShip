@@ -56,8 +56,8 @@ class GameplayMode : public GameMode {
     // TODO(cameron): Render boards of human players.
     if (_player1->IsHuman())
     {
-      _board2->Render(/*hitsOnly=*/true);
       _board1->Render();
+      _board2->Render(/*hitsOnly=*/true);
     }
 
     if (_player2->IsHuman())

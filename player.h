@@ -27,7 +27,7 @@ class Player {
   virtual bool ShouldAutoPlace() { return false; }
   bool IsHuman() { return false; }
  protected:
-  bool _piecesDown;
+  bool _piecesDown = false;
 };
 
 // An implemention of Player which is completely random.
@@ -43,26 +43,7 @@ class BadNpcPlayer : public Player {
   }
 
   Placement GetNextPlacement(Board* board) {
-    Placement placement;
-    bool valid = false;
-    while (!valid) {
-      ShipDefinition next = _remainingShips.top();
-
-      placement = Placement{
-        .move = RandomMove(),
-        .length = next.length,
-        .sideways = true,
-      };
-      valid = board->IsValidPlacement(placement);
-
-      if (valid) {
-        std::cout << "[ NPC ] Auto-placed: " << _remainingShips.top().name;
-        _remainingShips.pop();
-      }
-    }
-
-    _piecesDown = _remainingShips.size() == 0;
-    return placement;
+    return Placement{};
   }
 
   Move GetNextMove() {
@@ -106,12 +87,9 @@ class HumanPlayer : public Player {
         .sideways = true,
       };
       valid = board->IsValidPlacement(placement);
-
-      if (valid) {
-        _remainingShips.pop();
-      }
     }
 
+    _remainingShips.pop();
     _piecesDown = _remainingShips.size() == 0;
     return placement;
   }
@@ -131,7 +109,7 @@ class HumanPlayer : public Player {
     std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::toupper);
     return Move{
       .x = indexForColumnReference(buffer.substr(0,1)),
-      .y = indexForColumnReference(buffer.substr(1,1)),
+      .y = std::atoi(buffer.substr(1,1).c_str() ) - 1,
     };
   }
 

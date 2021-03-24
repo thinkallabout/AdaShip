@@ -23,12 +23,6 @@ enum Tile {
 
 class Board {
  public:
-  Board() {
-    _x = 10;
-    _y = 10;
-    SetupBoard();
-  }
-
   Board(int x, int y) : _x(x), _y(y) {
     SetupBoard();
   }
@@ -53,6 +47,8 @@ class Board {
     for (int i = 0; i < _x; i++) {
       _board[i].reserve(_y);
     }
+    
+    Reset();
   }
 
   void RenderLine() {
