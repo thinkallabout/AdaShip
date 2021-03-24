@@ -8,22 +8,12 @@
 #include <stack>
 #include "board.h"
 #include "config.h"
+#include "move.h"
 
 #ifndef _INCLUDE_PLAYER_H_
 #define _INCLUDE_PLAYER_H_
 
 namespace google {
-
-struct Move {
-  int x;
-  int y;
-};
-
-struct Placement {
-  Move move;
-  int length;
-  bool sideways;
-};
 
 class Player {
   // TODO(cameron): Get next move or placement setup.

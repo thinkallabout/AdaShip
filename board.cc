@@ -3,7 +3,7 @@
 
 namespace google {
 
-void Board::Render(bool hitsOnly = false) {
+void Board::Render(bool hitsOnly) {
   std::cout << std::endl;
 
   RenderLine();

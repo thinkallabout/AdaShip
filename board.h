@@ -6,6 +6,7 @@
 #include <string>
 
 #include "config.h"
+#include "move.h"
 
 #ifndef _INCLUDE_BOARD_H_
 #define _INCLUDE_BOARD_H_
