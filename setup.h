@@ -24,11 +24,11 @@ class SetupMode : public GameMode {
     std::string buffer;
     std::cin >> buffer;
 
-    if (buffer == "y") {
-      _board1->AutoPlace();
-      _board2->AutoPlace();
+    bool valid = true;
+    if (_player1->ShouldAutoPlace()
+    || (_player1->IsHuman() && buffer == "y")) {
+      _board1->AutoPlace(_player1);
     } else {
-      bool valid = true;
       do {
         Placement move = _player1->GetNextPlacement();
         valid = _board1->ApplyPlacement(move);
@@ -36,7 +36,12 @@ class SetupMode : public GameMode {
           std::cout << "Invalid placement:" << std::endl;
         }
       } while (!valid);
-      
+    }
+
+    if (_player2->ShouldAutoPlace()
+    || (_player2->IsHuman() && buffer == "y"))  {
+      _board2->AutoPlace(_player2);
+    } else {
       do {
         Placement move = _player2->GetNextPlacement();
         valid = _board2->ApplyPlacement(move);

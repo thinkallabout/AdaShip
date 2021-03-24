@@ -67,6 +67,33 @@ class Board {
   }
 
   bool ApplyPlacement(Placement placement) {
+    int x = placement.move.x;
+    int y = placement.move.y;
+
+    if (placement.sideways) {
+      for (int i = 0; i < placement.length; i++) {
+        if (_board[x+i][y] != Tile::EMPTY) {
+          return false;
+        }
+      }
+    } else {
+      for (int i = 0; i < placement.length; i++) {
+        if (_board[x][y+i] != Tile::EMPTY) {
+          return false;
+        }
+      }
+    }
+
+    if (placement.sideways) {
+      for (int i = 0; i < placement.length; i++) {
+        _board[x+i][y] = Tile::SHIP;
+      }
+    } else {
+      for (int i = 0; i < placement.length; i++) {
+        _board[x][y+i] = Tile::SHIP;
+      }
+    }
+
     return false;
   }
 
@@ -79,11 +106,12 @@ class Board {
     } else {
       _board[i][j] = Tile::MISS;
     }
-    
+
     return true;
   }
 
-  void AutoPlace() {
+  void AutoPlace(Player* player) {
+    // player.GetRemainingPieces
     std::cout << "Autoplacing\n";
   }
 

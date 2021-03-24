@@ -14,6 +14,7 @@ struct Move {
 struct Placement {
   Move move;
   int length;
+  bool sideways;
 };
 
 class Player {
@@ -26,6 +27,7 @@ class Player {
   virtual bool ShouldRenderBoard() { return false; }
   bool AllPiecesDown() { return _piecesDown; }
   virtual bool ShouldAutoPlace() { return false; }
+  bool IsHuman() { return false; }
  protected:
   bool _piecesDown;
 };
@@ -52,23 +54,15 @@ class BadNpcPlayer : public Player {
 
  private:
   Move RandomMove() {
-    return Move{};
+    return Move{
+      .x = 0,
+      .y = 0,
+    };
   }
 };
 
 class HumanPlayer : public Player {
-  Placement GetNextPlacement() {
-    _piecesDown = true;
-    std::cout << "Next piece: ";
-    std::string buffer;
-    std::cin >> buffer;
-    Placement placement = Placement{
-      .move = MoveFromInputBuffer(buffer),
-      .length = 4,
-      // TODO(cameron): Get the length of the piece.
-    };
-    return placement;
-  }
+  Placement GetNextPlacement() { return Placement{}; }
 
   Move GetNextMove() {
     std::cout << "Next move: ";
@@ -77,6 +71,7 @@ class HumanPlayer : public Player {
     return MoveFromInputBuffer(buffer);
   }
 
+  bool IsHuman() { return true; }
   virtual bool ShouldRenderBoard() { return true; }
 
   Move MoveFromInputBuffer(std::string buffer) {
