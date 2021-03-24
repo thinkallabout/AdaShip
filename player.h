@@ -1,6 +1,8 @@
 // Provides the Player class, which can be implemented by a human or
 // an NPC version.
 
+#import <cstdlib>
+
 #ifndef _INCLUDE_PLAYER_H_
 #define _INCLUDE_PLAYER_H_
 
@@ -62,7 +64,17 @@ class BadNpcPlayer : public Player {
 };
 
 class HumanPlayer : public Player {
-  Placement GetNextPlacement() { return Placement{}; }
+  Placement GetNextPlacement() {
+    
+    std::string buffer;
+    std::cout << "Next placement (e.g. A2): ";
+    std::cin >> buffer;
+    return Placement{
+      .move = MoveFromInputBuffer(buffer),
+      .length = 5,
+      .sideways = true,
+    };
+  }
 
   Move GetNextMove() {
     std::cout << "Next move: ";
@@ -76,9 +88,11 @@ class HumanPlayer : public Player {
 
   Move MoveFromInputBuffer(std::string buffer) {
     // A2 -> 0, 0
+    int x = std::stoi(1, 0);
+    int y = std::stoi(1, 1);
     return Move{
-      .x = 9,
-      .y = 9,
+      .x = x,
+      .y = y,
     };
   }
 };

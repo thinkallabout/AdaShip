@@ -5,10 +5,12 @@
 #include "setup.h"
 #include "player.h"
 #include "board.h"
+#include "config.h"
 
 using namespace google;
 
 int main() {
+  ConfigFile config_file;
 
   MainMenu main_menu;
   main_menu.Execute();
@@ -16,10 +18,10 @@ int main() {
   Player* player1;
   Player* player2;
 
-  HumanPlayer* humanPlayer1 = new HumanPlayer();
-  BadNpcPlayer* npcPlayer1 = new BadNpcPlayer();
-  HumanPlayer* humanPlayer2 = new HumanPlayer();
-  BadNpcPlayer* npcPlayer2 = new BadNpcPlayer();
+  HumanPlayer* humanPlayer1 = new HumanPlayer(config_file);
+  BadNpcPlayer* npcPlayer1 = new BadNpcPlayer(config_file);
+  HumanPlayer* humanPlayer2 = new HumanPlayer(config_file);
+  BadNpcPlayer* npcPlayer2 = new BadNpcPlayer(config_file);
 
   GameModeConfig config = main_menu.GetConfig();
   if (config.player1 == PlayerType::HUMAN) {

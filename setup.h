@@ -53,7 +53,7 @@ class SetupMode : public GameMode {
 
     std::cout << "Reset? (y/n)\n";
     std::cin >> buffer;
-    if (buffer == reset) {
+    if (buffer == "y") {
       _board1->Reset();
       _board2->Reset();
     } else {

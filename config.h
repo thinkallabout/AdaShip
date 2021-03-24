@@ -1,16 +1,36 @@
-// Provides the Config file properties.
+// Provides the MainMenu.
 
-#include <stdio>
-
-using namespace std;
+#include <cstdlib>
 
 #ifndef _INCLUDE_CONFIG_H_
 #define _INCLUDE_CONFIG_H_
 
 namespace google {
 
-// Board size
-// Ship definitions (size, name)
+enum PlayerType {
+  HUMAN,
+  NPC,
+};
+
+enum GameModeType {
+  DEFAULT,
+  SALVO,
+  HIDDEN_MINES,
+};
+
+struct ShipDefinition {
+  std::string name;
+  int length;
+};
+
+struct GameModeConfig {
+  PlayerType player1;
+  PlayerType player2;
+  GameModeType gameMode;
+  int boardHeight;
+  int boardWidth;
+  std::vector<ShipDefinition> ships;
+};
 
 } // namespace google
 

@@ -5,26 +5,9 @@
 #ifndef _INCLUDE_MAIN_MENU_H_
 #define _INCLUDE_MAIN_MENU_H_
 
+#include "config.h"
+
 namespace google {
-
-enum PlayerType {
-  HUMAN,
-  NPC,
-};
-
-enum GameModeType {
-  DEFAULT,
-  SALVO,
-  HIDDEN_MINES,
-};
-
-struct GameModeConfig {
-  PlayerType player1;
-  PlayerType player2;
-  GameModeType gameMode;
-  int boardHeight;
-  int boardWidth;
-};
 
 class MainMenu : public GameMode {
  public:
@@ -48,6 +31,26 @@ class MainMenu : public GameMode {
 
     _config.boardWidth = 10;
     _config.boardHeight = 10;
+    _config.ships.push_back(ShipDefinition{
+      .length = 5,
+      .name = "Carrier",
+    });
+    _config.ships.push_back(ShipDefinition{
+      .length = 4,
+      .name = "Battleship",
+    });
+    _config.ships.push_back(ShipDefinition{
+      .length = 3,
+      .name = "Destroyer",
+    });
+    _config.ships.push_back(ShipDefinition{
+      .length = 3,
+      .name = "Submarine",
+    });
+    _config.ships.push_back(ShipDefinition{
+      .length = 2,
+      .name = "Patrol Boat",
+    });
 
     switch (buffer) {
       case 1:
