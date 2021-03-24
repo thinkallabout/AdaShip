@@ -21,6 +21,15 @@ class GameplayMode : public GameMode {
               _board1(board1), _board2(board2), _config(config) {}
 
   void WaitForInput() override {
+    if (_board2->Empty()) {
+      std::cout << "Player 1 has won!" << std::endl;
+      _active = false;
+    }
+    else if (_board1->Empty()) {
+      std::cout << "Player 2 has won!" << std::endl;
+      _active = false;
+    }
+
     bool valid = true;
     do {
       Move move = _player1->GetNextMove();
@@ -37,15 +46,6 @@ class GameplayMode : public GameMode {
         std::cout << "Invalid move" << std::endl;
       }
     } while (!valid);
-
-    if (_board1->Empty()) {
-      std::cout << "Player 2 has won!" << std::endl;
-      _active = false;
-    }
-    else if (_board2->Empty()) {
-      std::cout << "Player 1 has won!" << std::endl;
-      _active = false;
-    }
   }
 
   void Render() override {
@@ -54,10 +54,14 @@ class GameplayMode : public GameMode {
               << std::endl << std::endl << std::endl;
 
     // TODO(cameron): Render boards of human players.
-    if (_player1->ShouldRenderBoard())
+    if (_player1->IsHuman())
+    {
+      _board2->Render(/*hitsOnly=*/true);
       _board1->Render();
+    }
 
-    if (_player2->ShouldRenderBoard())
+    if (_player2->IsHuman())
+      _board1->Render(/*hitsOnly=*/true);
       _board2->Render();
   }
 

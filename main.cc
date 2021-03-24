@@ -11,16 +11,16 @@ using namespace google;
 
 int main() {
   MainMenu main_menu;
-  GameModeConfig config = main_menu.GetConfig();
   main_menu.Execute();
 
   Player* player1;
   Player* player2;
 
-  HumanPlayer* humanPlayer1 = new HumanPlayer();
-  BadNpcPlayer* npcPlayer1 = new BadNpcPlayer();
-  HumanPlayer* humanPlayer2 = new HumanPlayer();
-  BadNpcPlayer* npcPlayer2 = new BadNpcPlayer();
+  GameModeConfig config = main_menu.GetConfig();
+  HumanPlayer* humanPlayer1 = new HumanPlayer(config);
+  BadNpcPlayer* npcPlayer1 = new BadNpcPlayer(config);
+  HumanPlayer* humanPlayer2 = new HumanPlayer(config);
+  BadNpcPlayer* npcPlayer2 = new BadNpcPlayer(config);
 
   if (config.player1 == PlayerType::HUMAN) {
     player1 = humanPlayer1;
@@ -39,7 +39,7 @@ int main() {
   Board* board1 = new Board(boardWidth, boardHeight);
   Board* board2 = new Board(boardWidth, boardHeight);
 
-  SetupMode setup(player1, player2, board1, board2);
+  SetupMode setup(player1, player2, board1, board2, config);
   setup.Execute();
 
   // Both boards will be ready at this point.
