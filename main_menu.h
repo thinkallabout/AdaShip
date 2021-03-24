@@ -7,6 +7,23 @@
 
 namespace google {
 
+enum PlayerType {
+  HUMAN,
+  NPC,
+};
+
+enum GameModeType {
+  DEFAULT,
+  SALVO,
+  HIDDEN_MINES,
+};
+
+struct GameModeConfig {
+  PlayerType player1;
+  PlayerType player2;
+  GameModeType gameMode;
+};
+
 class MainMenu : public GameMode {
  public:
   void WaitForInput() override {
@@ -29,6 +46,45 @@ class MainMenu : public GameMode {
 
     switch (buffer) {
       case 1:
+        _config.player1 = PlayerType::HUMAN;
+        _config.player2 = PlayerType::NPC;
+        _config.gameMode = GameModeType::DEFAULT;
+        _active = false;
+        break;
+      case 2:
+        _config.player1 = PlayerType::HUMAN;
+        _config.player2 = PlayerType::HUMAN;
+        _config.gameMode = GameModeType::DEFAULT;
+        _active = false;
+        break;
+      case 3:
+        _config.player1 = PlayerType::HUMAN;
+        _config.player2 = PlayerType::NPC;
+        _config.gameMode = GameModeType::SALVO;
+        _active = false;
+        break;
+      case 4:
+        _config.player1 = PlayerType::HUMAN;
+        _config.player2 = PlayerType::HUMAN;
+        _config.gameMode = GameModeType::SALVO;
+        _active = false;
+        break;
+      case 5:
+        _config.player1 = PlayerType::HUMAN;
+        _config.player2 = PlayerType::NPC;
+        _config.gameMode = GameModeType::HIDDEN_MINES;
+        _active = false;
+        break;
+      case 6:
+        _config.player1 = PlayerType::HUMAN;
+        _config.player2 = PlayerType::HUMAN;
+        _config.gameMode = GameModeType::HIDDEN_MINES;
+        _active = false;
+        break;
+      case 7:
+        _config.player1 = PlayerType::NPC;
+        _config.player2 = PlayerType::NPC;
+        _config.gameMode = GameModeType::HIDDEN_MINES;
         _active = false;
         break;
       // TODO(cameron): Implement other game modes here.
@@ -40,11 +96,15 @@ class MainMenu : public GameMode {
   void Render() override {}
   void Tick() override {}
 
+  GameModeConfig GetConfig() { return _config; }
+
  private:
   void QuitGame() {
     std::cout << "Bye bye!" << std::endl;
     exit(0);
   }
+  
+  GameModeConfig _config;
 };
 
 } // namespace google
