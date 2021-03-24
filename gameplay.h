@@ -20,11 +20,31 @@ class GameplayMode : public GameMode {
               _board1(board1), _board2(board2) {}
 
   void WaitForInput() override {
-    // TODO(cameron): Apply move to Board (if legal).
-    _player1->GetNextMove();
-    _player2->GetNextMove();
-    // TODO(cameron): Stop once one of the players has won.
-    _active = false;
+    bool valid = true;
+    do {
+      Move move = _player1->GetNextMove();
+      valid = _board1->ApplyMove(move);
+      if (!valid && _player1->ShouldRenderBoard()) {
+        std::cout << "Invalid move" << std::endl;
+      }
+    } while (!valid);
+    
+    do {
+      Move move = _player2->GetNextMove();
+      valid = _board2->ApplyMove(move);
+      if (!valid && _player2->ShouldRenderBoard()) {
+        std::cout << "Invalid move" << std::endl;
+      }
+    } while (!valid);
+
+    if (_board1->Empty()) {
+      std::cout << "Player 2 has won!" << std::endl;
+      _active = false;
+    }
+    else if (_board2->Empty()) {
+      std::cout << "Player 1 has won!" << std::endl;
+      _active = false;
+    }
   }
 
   void Render() override {

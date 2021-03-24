@@ -24,6 +24,9 @@ class Player {
   virtual Placement GetNextPlacement() = 0;
   virtual Move GetNextMove() = 0;
   virtual bool ShouldRenderBoard() { return false; }
+  bool AllPiecesDown() { return _piecesDown; }
+ protected:
+  bool _piecesDown;
 };
 
 // An implemention of Player which is completely random.
@@ -33,6 +36,7 @@ class Player {
 class BadNpcPlayer : public Player {
   Placement GetNextPlacement() {
     // Return random placements forever based on remaining pieces.
+    _piecesDown = true;
     return Placement{
       .move = RandomMove(),
       .length = 4
@@ -44,8 +48,6 @@ class BadNpcPlayer : public Player {
     return RandomMove();
   }
 
-  virtual bool ShouldRenderBoard() { return true; }
-
  private:
   Move RandomMove() {
     return Move{};
@@ -54,6 +56,7 @@ class BadNpcPlayer : public Player {
 
 class HumanPlayer : public Player {
   Placement GetNextPlacement() {
+    _piecesDown = true;
     std::cout << "Next piece: ";
     std::string buffer;
     std::cin >> buffer;
@@ -72,11 +75,13 @@ class HumanPlayer : public Player {
     return MoveFromInputBuffer(buffer);
   }
 
+  virtual bool ShouldRenderBoard() { return true; }
+
   Move MoveFromInputBuffer(std::string buffer) {
     // A2 -> 0, 0
     return Move{
-      .x = 10,
-      .y = 10,
+      .x = 9,
+      .y = 9,
     };
   }
 };

@@ -20,11 +20,32 @@ class SetupMode : public GameMode {
             _board1(board1), _board2(board2) {}
 
   void WaitForInput() override {
-    _active = false;
+    bool valid = true;
+    do {
+      Placement move = _player1->GetNextPlacement();
+      valid = _board1->ApplyPlacement(move);
+      if (!valid && _player1->ShouldRenderBoard()) {
+        std::cout << "Invalid placement:" << std::endl;
+      }
+    } while (!valid);
+    
+    do {
+      Placement move = _player2->GetNextPlacement();
+      valid = _board2->ApplyPlacement(move);
+      if (!valid && _player2->ShouldRenderBoard()) {
+        std::cout << "Invalid placement:" << std::endl;
+      }
+    } while (!valid);
+
+    _active = _player1->AllPiecesDown() && _player2->AllPiecesDown();
   }
 
   void Render() override {
-    _board1->Render();
+    if (_player1->ShouldRenderBoard())
+      _board1->Render();
+
+    if (_player2->ShouldRenderBoard())
+      _board2->Render();
   }
 
   void Tick() override {}

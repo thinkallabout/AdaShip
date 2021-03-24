@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <vector>
 
+#include "player.h"
+
 #ifndef _INCLUDE_BOARD_H_
 #define _INCLUDE_BOARD_H_
 
@@ -11,6 +13,7 @@ namespace google {
 
 enum Tile {
   EMPTY = 0,
+  // Undamaged ship remanining here.
   SHIP = 1,
   HIT = 2,
   MISS = 3,
@@ -61,6 +64,26 @@ class Board {
     }
 
     RenderLine();
+  }
+
+  bool ApplyPlacement(Placement placement) {
+    return false;
+  }
+
+  bool ApplyMove(Move move) {
+    return false;
+  }
+
+  bool Empty() {
+    for (int i = 0; i < _y; i++) {
+      for (int j = 0; j < _x; j++) {
+        if (_board[i][j] == Tile::SHIP) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
  private:
