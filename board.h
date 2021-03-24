@@ -9,6 +9,13 @@
 
 namespace google {
 
+enum Tile {
+  EMPTY = 0,
+  SHIP = 1,
+  HIT = 2,
+  MISS = 3,
+};
+
 class Board {
  public:
   Board() {
@@ -28,23 +35,25 @@ class Board {
       for (int j = 0; j < _x; j++) {
         switch (_board[i][j]) {
           // TODO(cameron): Use enum statement here instead.
-          case 1:
+          // The double size char is used due to the narrow character space
+          // on the terminal.
+          case Tile::SHIP:
             if (hitsOnly)
-              std::cout << "~";
+              std::cout << "~~";
             else
-              std::cout << "D";
+              std::cout << "DD";
             break;
 
-          case 2:  // Hit.
-            std::cout << "X";
+          case Tile::HIT:  // Hit.
+            std::cout << "XX";
             break;
-          case 3:  // Miss.
-            std::cout << "x";
+          case Tile::MISS:  // Miss.
+            std::cout << "xx";
             break;
             
-          case 0:
+          case Tile::EMPTY:
           default:
-            std::cout << "~";
+            std::cout << "~~";
         }
       }
 
@@ -70,7 +79,7 @@ class Board {
 
   void RenderLine() {
     for (int i = 0; i < _x; i++) {
-      std::cout << "-";
+      std::cout << "--";
     }
     std::cout << "\n";
   }

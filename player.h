@@ -23,6 +23,7 @@ class Player {
   Player(Player&&) = default;
   virtual Placement GetNextPlacement() = 0;
   virtual Move GetNextMove() = 0;
+  virtual bool ShouldRenderBoard() { return false; }
 };
 
 // An implemention of Player which is completely random.
@@ -42,6 +43,8 @@ class BadNpcPlayer : public Player {
     // Return random placements forever.
     return RandomMove();
   }
+
+  virtual bool ShouldRenderBoard() { return true; }
 
  private:
   Move RandomMove() {
