@@ -70,6 +70,10 @@ class Board {
     int x = placement.move.x;
     int y = placement.move.y;
 
+    if (x > _board.size() || y > _board[0].size()) {
+      return false;
+    }
+
     if (placement.sideways) {
       for (int i = 0; i < placement.length; i++) {
         if (_board[x+i][y] != Tile::EMPTY) {
@@ -125,6 +129,14 @@ class Board {
     }
 
     return true;
+  }
+
+  void Reset() {
+    for (int i = 0; i < _y; i++) {
+      for (int j = 0; j < _x; j++) {
+        _board[i][j] = Tile::EMPTY;
+      }
+    }
   }
 
  private:

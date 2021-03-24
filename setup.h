@@ -51,7 +51,14 @@ class SetupMode : public GameMode {
       } while (!valid);
     }
 
-    _active = _player1->AllPiecesDown() && _player2->AllPiecesDown();
+    std::cout << "Reset? (y/n)\n";
+    std::cin >> buffer;
+    if (buffer == reset) {
+      _board1->Reset();
+      _board2->Reset();
+    } else {
+      _active = _player1->AllPiecesDown() && _player2->AllPiecesDown();
+    }
   }
 
   void Render() override {
