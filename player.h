@@ -1,7 +1,8 @@
 // Provides the Player class, which can be implemented by a human or
 // an NPC version.
 
-#import <cstdlib>
+#include <cstdlib>
+#include <string>
 
 #ifndef _INCLUDE_PLAYER_H_
 #define _INCLUDE_PLAYER_H_
@@ -88,8 +89,8 @@ class HumanPlayer : public Player {
 
   Move MoveFromInputBuffer(std::string buffer) {
     // A2 -> 0, 0
-    int x = std::stoi(1, 0);
-    int y = std::stoi(1, 1);
+    int x = std::stoi(buffer.substr(1, 0));
+    int y = std::stoi(buffer.substr(1, 1));
     return Move{
       .x = x,
       .y = y,

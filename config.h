@@ -1,6 +1,9 @@
 // Provides the MainMenu.
 
 #include <cstdlib>
+#include <vector>
+#include <iostream>
+#include <string>
 
 #ifndef _INCLUDE_CONFIG_H_
 #define _INCLUDE_CONFIG_H_
