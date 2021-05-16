@@ -16,11 +16,13 @@ int main() {
   Player* player1;
   Player* player2;
 
+
   GameModeConfig config = main_menu.GetConfig();
   HumanPlayer* humanPlayer1 = new HumanPlayer(config);
   BadNpcPlayer* npcPlayer1 = new BadNpcPlayer(config);
   HumanPlayer* humanPlayer2 = new HumanPlayer(config);
   BadNpcPlayer* npcPlayer2 = new BadNpcPlayer(config);
+
 
   if (config.player1 == PlayerType::HUMAN) {
     player1 = humanPlayer1;
@@ -36,6 +38,7 @@ int main() {
 
   int boardWidth = config.boardWidth;
   int boardHeight = config.boardHeight;
+  std::cout << "Width: " << boardWidth << " Height: " << boardHeight << "\n";
   Board* board1 = new Board(boardWidth, boardHeight);
   Board* board2 = new Board(boardWidth, boardHeight);
 

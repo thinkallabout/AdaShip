@@ -45,10 +45,10 @@ class Board {
   void HitMine(int x, int y);
 
   void SetupBoard() {
-    _board.reserve(_x);
+    _board.resize(_x);
 
     for (int i = 0; i < _x; i++) {
-      _board[i].reserve(_y);
+      _board[i].resize(_y);
     }
     
     Reset();

@@ -137,6 +137,7 @@ void Board::AutoPlace(GameModeConfig config) {
     bool valid = false;
     while (!valid) {
       ShipDefinition next = ships.top();
+      std::cout << next.name;
 
       placement = Placement{
         .move = Move{
@@ -149,7 +150,7 @@ void Board::AutoPlace(GameModeConfig config) {
       valid = IsValidPlacement(placement);
 
       if (valid) {
-        // std::cout << "[ NPC ] Auto-placed: " << ships.top().name;
+        std::cout << "[ NPC ] Auto-placed: " << ships.top().name;
         ships.pop();
         ApplyPlacement(placement);
       }
@@ -172,7 +173,7 @@ bool Board::Empty() {
 void Board::Reset() {
   for (int i = 0; i < _y; i++) {
     for (int j = 0; j < _x; j++) {
-      _board[i][j] = Tile::EMPTY;
+      // _board[i][j] = Tile::EMPTY;
     }
   }
 }
