@@ -65,10 +65,11 @@ class BadNpcPlayer : public Player {
 
 class HumanPlayer : public Player {
  public:
-  HumanPlayer(GameModeConfig config) : _config(config) {
+  HumanPlayer(GameModeConfig config, std::string name) : _config(config) {
     for (int i = 0; i < config.ships.size(); i++) {
       _remainingShips.push(config.ships[i]);
     }
+    _name = name;
   }
 
   Placement GetNextPlacement(Board* board) {
@@ -95,7 +96,7 @@ class HumanPlayer : public Player {
   }
 
   Move GetNextMove() {
-    std::cout << "Next move: ";
+    std::cout << "[" << _name << "] Next move: ";
     std::string buffer;
     std::cin >> buffer;
     return MoveFromInputBuffer(buffer);
@@ -114,6 +115,7 @@ class HumanPlayer : public Player {
   }
 
  private:
+  std::string _name = "Player";
   std::stack<ShipDefinition> _remainingShips;
   GameModeConfig _config;
 

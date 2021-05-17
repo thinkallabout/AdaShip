@@ -18,9 +18,9 @@ int main() {
 
 
   GameModeConfig config = main_menu.GetConfig();
-  HumanPlayer* humanPlayer1 = new HumanPlayer(config);
+  HumanPlayer* humanPlayer1 = new HumanPlayer(config, "Player 1");
   BadNpcPlayer* npcPlayer1 = new BadNpcPlayer(config);
-  HumanPlayer* humanPlayer2 = new HumanPlayer(config);
+  HumanPlayer* humanPlayer2 = new HumanPlayer(config, "Player 2");
   BadNpcPlayer* npcPlayer2 = new BadNpcPlayer(config);
 
 
@@ -40,7 +40,9 @@ int main() {
   int boardHeight = config.boardHeight;
   std::cout << "Width: " << boardWidth << " Height: " << boardHeight << "\n";
   Board* board1 = new Board(boardWidth, boardHeight);
+  board1->Reset();
   Board* board2 = new Board(boardWidth, boardHeight);
+  board2->Reset();
 
   SetupMode setup(player1, player2, board1, board2, config);
   setup.Execute();

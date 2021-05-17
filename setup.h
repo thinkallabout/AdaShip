@@ -59,7 +59,7 @@ class SetupMode : public GameMode {
           _board2->Render();
       } while (!valid);
     }
-
+    
     std::cout << "Reset/Continue/Quit? (r/c/q)\n";
     std::cin >> buffer;
     if (buffer == "r") {

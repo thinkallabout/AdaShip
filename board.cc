@@ -17,24 +17,24 @@ void Board::Render(bool hitsOnly) {
         // on the terminal.
         case Tile::SHIP:
           if (hitsOnly)
-            std::cout << "~~";
+            std::cout << "~";
           else
-            std::cout << "DD";
+            std::cout << "D";
           break;
 
         case Tile::HIT:  // Hit.
-          std::cout << "XX";
+          std::cout << "X";
           break;
         case Tile::MINE:  // Miss.
-          std::cout << "MM";
+          std::cout << "M";
           break;
         case Tile::MISS:  // Miss.
-          std::cout << "xx";
+          std::cout << "x";
           break;
           
         case Tile::EMPTY:
         default:
-          std::cout << "~~";
+          std::cout << "~";
       }
     }
 
@@ -47,24 +47,28 @@ void Board::Render(bool hitsOnly) {
 bool Board::IsValidPlacement(Placement placement) {
   int x = placement.move.x;
   int y = placement.move.y;
-
-  if (x > _board.size() || y > _board[0].size()) {
-    // return false;
-  }
-
-  _board.reserve(x);
+  int width = _board.size();
+  int height = _board[0].size();
 
   if (placement.sideways) {
+    // Check bounds.
+    if (x + placement.length >= width || y >= height) {
+      return false;
+    }
+
+    // Check tiles are empty.
     for (int i = 0; i < placement.length; i++) {
-      _board[x+i].reserve(y);
-      if (_board[x+i][y] > 0) {
+      if (_board[x+i][y] != Tile::EMPTY) {
         return false;
       }
     }
   } else {
+    if (x >= width || y + placement.length >= height) {
+      return false;
+    }
+
     for (int i = 0; i < placement.length; i++) {
-      _board[x+i].reserve(y);
-      if (_board[x][y-i] > 0) {
+      if (_board[x][y+i] != Tile::EMPTY) {
         return false;
       }
     }
@@ -132,13 +136,13 @@ void Board::AutoPlace(GameModeConfig config) {
     ships.push(config.ships[i]);
   }
 
-  while (ships.size() > 0) {
+  while (!ships.empty()) {
+
     Placement placement;
     bool valid = false;
+    ShipDefinition next = ships.top();
+    
     while (!valid) {
-      ShipDefinition next = ships.top();
-      std::cout << next.name;
-
       placement = Placement{
         .move = Move{
           .x = (int) rand() % config.boardWidth,
@@ -148,13 +152,11 @@ void Board::AutoPlace(GameModeConfig config) {
         .sideways = true,
       };
       valid = IsValidPlacement(placement);
-
-      if (valid) {
-        std::cout << "[ NPC ] Auto-placed: " << ships.top().name;
-        ships.pop();
-        ApplyPlacement(placement);
-      }
     }
+
+    ApplyPlacement(placement);
+    if (!ships.empty()) ships.pop();
+    std::cout << "[ NPC ] Auto-placed: " << next.name << "\n";
   }
 }
 
@@ -171,9 +173,9 @@ bool Board::Empty() {
 }
 
 void Board::Reset() {
-  for (int i = 0; i < _y; i++) {
-    for (int j = 0; j < _x; j++) {
-      // _board[i][j] = Tile::EMPTY;
+  for (int i = 0; i < _board.size(); i++) {
+    for (int j = 0; j < _board[i].size(); j++) {
+      _board[i][j] = Tile::EMPTY;
     }
   }
 }
